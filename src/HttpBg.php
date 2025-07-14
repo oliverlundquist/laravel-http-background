@@ -153,18 +153,13 @@ class HttpBg
         return $this;
     }
 
-    public function processIsRunning(): bool
-    {
+    public function processIsRunning(): bool {
         $request = $this->getRequest();
-
         if ($request->pid < 1) {
             return false;
         }
-        $process = trim(strval(exec('ps -o pid= | grep " ' . $request->pid . '"')));
-        if (strlen($process) === 0) {
-            return false;
-        }
-        return true;
+        $process = intval(trim(strval(exec('kill -s 0 ' . $request->pid . ' > /dev/null 2>&1; echo $?'))));
+        return $process === 1 ? false : true;
     }
 
     /**

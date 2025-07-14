@@ -1,0 +1,12 @@
+services:
+  php:
+    image: oliverlundquist/php84-opcache:8.4.3
+    environment:
+      VALIDATE_TIMESTAMPS: 1
+    volumes:
+      - .:/var/app/current
+    networks:
+      - php-app
+networks:
+  php-app:
+    driver: bridge

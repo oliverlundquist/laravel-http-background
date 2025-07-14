@@ -1,0 +1,16 @@
+* text=auto
+
+*.md diff=markdown
+*.php diff=php
+
+*.neon linguist-language=neon
+
+/.github export-ignore
+/tests export-ignore
+.editorconfig export-ignore
+.gitattributes export-ignore
+.gitignore export-ignore
+docker-compose.yml export-ignore
+phpstan.neon export-ignore
+phpunit.xml export-ignore
+testbench.yaml export-ignore

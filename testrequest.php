@@ -2,10 +2,13 @@
 
 
 $output = [];
-exec('powershell (curl https://httpbin.org/delay/5 -s &).id)', $output);
+var_dump(exec('powershell ((curl https://httpbin.org/delay/5 -s &).id)', $output));
 var_dump($output);
-var_dump(exec('which pwsh'));
-var_dump(exec('which pwsh.exe'));
+var_dump(exec('pwsh ((curl https://httpbin.org/delay/5 -s &).id)', $output));
+var_dump($output);
+var_dump(exec('pwsh.exe ((curl https://httpbin.org/delay/5 -s &).id)', $output));
+var_dump($output);
+
 
 // $id = exec('curl https://httpbin.org/delay/5 &).id');
 // var_dump($id);

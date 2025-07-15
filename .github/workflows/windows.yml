@@ -17,9 +17,10 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - run: which curl
-      - run: curl --help
+      - run: curl --help all
+      - run: curl -w '%{response_code}' 'https://httpbin.org/get'
+      - run: tasklist --help
       - run: tasklist
-      - run: ps aux
 
       # - run: composer require --dev orchestra/testbench
       # - run: vendor/bin/testbench workbench:install --no-interaction

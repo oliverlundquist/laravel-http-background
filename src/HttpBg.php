@@ -167,7 +167,7 @@ class HttpBg
         }
 
         // check if process turned into a zombie
-        $isZombie = strpos(trim(str_replace(strval($request->pid), '', strval(exec('ps axo pid=,stat= | grep ' . $request->pid)))), 'Z') !== false;
+        $isZombie = strpos(strtoupper(trim(str_replace(strval($request->pid), '', strval(exec('ps axo pid=,stat= | grep ' . $request->pid))))), 'Z') !== false;
         if ($isZombie) {
             Log::warning(implode(' ', [
                 'Process with PID: ' . $request->pid . ' did not exit successfully.',

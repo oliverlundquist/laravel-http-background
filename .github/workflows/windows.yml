@@ -10,20 +10,22 @@ jobs:
         php-versions: ['8.4']
     steps:
       - uses: actions/checkout@v4
-      # - uses: shivammathur/setup-php@v2
-      #   with:
-      #     php-version: ${{ matrix.php-versions }}
-      #     tools: phpunit
-      #   env:
-      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php-versions }}
+          tools: phpunit
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       #- run: which curl
       #- run: which xargs
       #- run: curl --help all
       #- run: "curl --write-out 'requestid_123 10 30 %{time_connect} %{time_total} %{exitcode} %{response_code}' --connect-timeout 10 --max-time 30 --output NUL --silent --location --header 'Content-Type: application/json' --header 'Accept: application/json' --request 'post' --data '{\"key\":\"value\"}' 'https://httpbin.org/post'"
-      #- run: php -r 'var_dump(PHP_OS);'
-      - run: (curl https://httpbin.org/get &) | select Id
-      - run: curl --write-out '%{exitcode} %{response_code}' https://httpbin.org/get | xargs ls
+      - run: php -r 'exec(\'(curl https://httpbin.org/delay/5 &) | select Id\');'
       - run: tasklist
+      - run: (curl https://httpbin.org/get &) | select Id
+      - run: tasklist
+      - run: Get-Job -Id ((curl https://httpbin.org/get &) | select Id)
+      # - run: curl --write-out '%{exitcode} %{response_code}' https://httpbin.org/get | xargs ls
 
       # - run: (curl https://httpbin.org/get &).ChildProcesses.Id
       # - run: tasklist

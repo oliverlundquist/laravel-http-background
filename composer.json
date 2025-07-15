@@ -26,7 +26,7 @@
     },
     "scripts": {
         "test": "./vendor/bin/phpunit",
-        "fix": "./vendor/friendsofphp/php-cs-fixer/php-cs-fixer fix --verbose",
+        "fix": "./vendor/bin/php-cs-fixer fix --verbose",
         "static": "./vendor/bin/phpstan analyse",
         "all": [
             "@test",

@@ -155,10 +155,12 @@ class HttpBg
 
     public function processIsRunning(): bool {
         $request = $this->getRequest();
+        \Log::info($request->pid);
         if ($request->pid < 1) {
             return false;
         }
         $process = intval(trim(strval(exec('kill -s 0 ' . $request->pid . ' > /dev/null 2>&1; echo $?'))));
+        \Log::info($process);
         return $process === 1 ? false : true;
     }
 

@@ -59,6 +59,7 @@ abstract class TestCase extends BaseTestCase
                 $request->getRequest()->pid = intval(file_get_contents($filePath));
             }
         }
+        \Log::info($request->getRequest()->pid);
         $i = 0;
         while ($request->processIsRunning() === true && $i < $maxIterations) {
             $i = $i + 1;

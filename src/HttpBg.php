@@ -155,12 +155,17 @@ class HttpBg
 
     public function processIsRunning(): bool {
         $request = $this->getRequest();
-        \Log::info($request->pid);
+        \Log::info(['httpbg@158', $request->pid]);
         if ($request->pid < 1) {
             return false;
         }
         $process = intval(trim(strval(exec('kill -s 0 ' . $request->pid . ' > /dev/null 2>&1; echo $?'))));
-        \Log::info($process);
+
+        \Log::info(['httpbg@164', $process]);
+        $filePath  = __DIR__ . '/Storage/' . $this->getRequest()->id . '_pid.txt';
+        $filePath2 = base_path('/Storage/' . $this->getRequest()->id . '_pid.txt');
+        \Log::info([is_file($filePath), is_file($filePath2)]);
+
         return $process === 1 ? false : true;
     }
 

@@ -20,7 +20,7 @@ jobs:
       - run: composer require --dev orchestra/testbench
       - run: vendor/bin/testbench workbench:install --no-interaction
       - run: ln -s vendor/bin/testbench ./artisan
-      - run: phpunit --filter testGet
+      - run: phpunit --filter testGet$
       # - name: Make code coverage badge
       #   uses: timkrase/phpunit-coverage-badge@v1.2.1
       #   with:

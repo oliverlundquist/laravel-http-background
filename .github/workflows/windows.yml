@@ -24,7 +24,7 @@ jobs:
       # - run: tasklist
       # - run: (curl https://httpbin.org/get &) | select Id
       # - run: tasklist
-      - run: Get-Job -Id (curl https://httpbin.org/get &).id
+      # - run: Get-Job -Id (curl https://httpbin.org/get &).id
       # - run: curl --write-out '%{exitcode} %{response_code}' https://httpbin.org/get | xargs ls
 
       # - run: (curl https://httpbin.org/get &).ChildProcesses.Id

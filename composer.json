@@ -25,7 +25,7 @@
         "illuminate/queue": "^10.0|^11.0|^12.0"
     },
     "scripts": {
-        "test": "./vendor/bin/phpunit",
+        "test": "./vendor/bin/phpunit --no-coverage",
         "fix": "./vendor/bin/php-cs-fixer fix --verbose",
         "static": "./vendor/bin/phpstan analyse",
         "all": [

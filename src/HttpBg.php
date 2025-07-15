@@ -154,7 +154,8 @@ class HttpBg
         return $this;
     }
 
-    public function processIsRunning(): bool {
+    public function processIsRunning(): bool
+    {
         $request = $this->getRequest();
         if ($request->pid < 1) {
             return false;

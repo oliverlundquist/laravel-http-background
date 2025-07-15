@@ -1,6 +1,8 @@
 name: Coverage
 on: push
 
+permissions: write-all
+
 jobs:
   run:
     runs-on: ${{ matrix.operating-system }}

@@ -17,9 +17,11 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - run: which curl
+      - run: which xargs
       - run: curl --help all
-      - run: curl -w '%{response_code}' 'https://httpbin.org/get'
-      - run: tasklist --help
+      - run: curl --write-out 'requestid_123 10 30 %{time_connect} %{time_total} %{exitcode} %{response_code}' --connect-timeout 10 --max-time 30 --output /dev/null --silent --location --header 'Content-Type: application/json' --header 'Accept: application/json' --request 'get' --data '' 'https://httpbin.org/get'
+      - run: php -r 'var_dump(PHP_OS);'
+      - run: tasklist /?
       - run: tasklist
 
       # - run: composer require --dev orchestra/testbench

@@ -1,9 +1,9 @@
 <?php
 
 
-var_dump(exec('which powershell'));
-var_dump(exec('which powershell.exe'));
-var_dump(exec('powershell Get-Job'));
+$output = [];
+exec('powershell curl https://httpbin.org/delay/5 &).id', $output);
+var_dump($output);
 
 // $id = exec('curl https://httpbin.org/delay/5 &).id');
 // var_dump($id);

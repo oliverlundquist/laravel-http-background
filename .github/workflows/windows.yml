@@ -22,8 +22,8 @@ jobs:
       #- run: "curl --write-out 'requestid_123 10 30 %{time_connect} %{time_total} %{exitcode} %{response_code}' --connect-timeout 10 --max-time 30 --output NUL --silent --location --header 'Content-Type: application/json' --header 'Accept: application/json' --request 'post' --data '{\"key\":\"value\"}' 'https://httpbin.org/post'"
       - run: php testrequest.php
       # - run: tasklist
-      # - run: (curl https://httpbin.org/get &) | select Id
-      # - run: tasklist
+      - run: (curl https://httpbin.org/get &) | select Id
+      - run: tasklist
       # - run: Get-Job -Id (curl https://httpbin.org/get &).id
       # - run: curl --write-out '%{exitcode} %{response_code}' https://httpbin.org/get | xargs ls
 

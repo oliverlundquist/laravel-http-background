@@ -3,6 +3,7 @@
 namespace OliverLundquist\HttpBackground;
 
 use Exception;
+use Illuminate\Support\Facades\Log;
 
 class HttpBg
 {
@@ -155,18 +156,27 @@ class HttpBg
 
     public function processIsRunning(): bool {
         $request = $this->getRequest();
-        \Log::info(['httpbg@158', $request->pid]);
         if ($request->pid < 1) {
             return false;
         }
-        $process = intval(trim(strval(exec('kill -s 0 ' . $request->pid . ' > /dev/null 2>&1; echo $?'))));
 
-        \Log::info(['httpbg@164', $process]);
-        $filePath  = __DIR__ . '/Storage/' . $this->getRequest()->id . '_pid.txt';
-        $filePath2 = base_path('/Storage/' . $this->getRequest()->id . '_pid.txt');
-        \Log::info([is_file($filePath), is_file($filePath2)]);
+        // check if pid exists
+        $pidExists = intval(trim(strval(exec('kill -s 0 ' . $request->pid . ' > /dev/null 2>&1; echo $?')))) === 0 ? true : false;
+        if ($pidExists === false) {
+            return false;
+        }
 
-        return $process === 1 ? false : true;
+        // check if process turned into a zombie
+        $isZombie = strpos(trim(str_replace(strval($request->pid), '', strval(exec('ps axo pid=,stat= | grep ' . $request->pid)))), 'Z') !== false;
+        if ($isZombie) {
+            Log::warning(implode(' ', [
+                'Process with PID: ' . $request->pid . ' did not exit successfully.',
+                'Make sure that PID 1 can reap child processes.',
+                'If in Docker, running it with the --init option could resolve this issue.'
+            ]));
+            return false;
+        }
+        return true;
     }
 
     /**

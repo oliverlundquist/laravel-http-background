@@ -14,11 +14,11 @@ class HttpBgTest extends TestCase
     {
         $request = HttpBg::get('https://httpbin.org/get');
         $this->assertTrue($request->processIsRunning());
-        // $this->assertTrue($this->processHasExited($request));
+        $this->assertTrue($this->processHasExited($request));
 
-        // $request = Http::background()->get('https://httpbin.org/get');
-        // $this->assertTrue($request->processIsRunning());
-        // $this->assertTrue($this->processHasExited($request));
+        $request = Http::background()->get('https://httpbin.org/get');
+        $this->assertTrue($request->processIsRunning());
+        $this->assertTrue($this->processHasExited($request));
     }
 
     public function testHead()

@@ -50,7 +50,7 @@ abstract class TestCase extends BaseTestCase
     {
         $pid           = intval($request->getRequest()->pid);
         $requestId     = strval($request->getRequest()->id);
-        $maxIterations = 100;
+        $maxIterations = $request->getRequest()->totalRequestTimeout;
 
         // when running requests in the queue, the pid doesn't get set
         if ($pid === 0) {

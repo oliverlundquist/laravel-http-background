@@ -3,6 +3,7 @@
 namespace OliverLundquist\HttpBackground;
 
 use Exception;
+use Illuminate\Support\Facades\Log;
 
 class HttpBg
 {
@@ -94,11 +95,12 @@ class HttpBg
         return $this;
     }
 
-    public function withBody(string $content, string $contentType = 'application/json'): static
+    public function withBody(string $content, string $contentType = 'application/json', string $accept = 'application/json'): static
     {
         $request = $this->getRequest();
         $request->requestBody = $content;
-        $request->contentType = $contentType;
+        $this->contentType($contentType);
+        $this->accept($accept);
         return $this;
     }
 
@@ -106,6 +108,13 @@ class HttpBg
     {
         $request = $this->getRequest();
         $request->contentType = $contentType;
+        return $this;
+    }
+
+    public function accept(string $accept): static
+    {
+        $request = $this->getRequest();
+        $request->accept = $accept;
         return $this;
     }
 
@@ -156,12 +165,24 @@ class HttpBg
     public function processIsRunning(): bool
     {
         $request = $this->getRequest();
-
         if ($request->pid < 1) {
             return false;
         }
-        $process = trim(strval(exec('ps -o pid= | grep " ' . $request->pid . '"')));
-        if (strlen($process) === 0) {
+
+        // check if pid exists
+        $pidExists = intval(trim(strval(exec('kill -s 0 ' . $request->pid . ' > /dev/null 2>&1; echo $?')))) === 0 ? true : false;
+        if ($pidExists === false) {
+            return false;
+        }
+
+        // check if process turned into a zombie
+        $isZombie = strpos(strtoupper(trim(str_replace(strval($request->pid), '', strval(exec('ps axo pid=,stat= | grep ' . $request->pid))))), 'Z') !== false;
+        if ($isZombie) {
+            Log::warning(implode(' ', [
+                'Process with PID: ' . $request->pid . ' did not exit successfully.',
+                'Make sure that PID 1 can reap child processes.',
+                'If in Docker, running it with the --init option could resolve this issue.'
+            ]));
             return false;
         }
         return true;

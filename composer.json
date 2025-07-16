@@ -1,6 +1,6 @@
 {
     "name": "oliverlundquist/laravel-http-background",
-    "description": "Non-Blocking HTTP Requests.",
+    "description": "Non-Blocking HTTP Requests in Laravel.",
     "type": "library",
     "license": "MIT",
     "support": {
@@ -16,17 +16,17 @@
         }
     ],
     "require": {
-        "php": "^8.1",
+        "php": "^8.2",
         "lib-curl": "*",
-        "illuminate/console": "^10.0|^11.0|^12.0",
-        "illuminate/contracts": "^10.0|^11.0|^12.0",
-        "illuminate/support": "^10.0|^11.0|^12.0",
-        "illuminate/broadcasting": "^10.0|^11.0|^12.0",
-        "illuminate/queue": "^10.0|^11.0|^12.0"
+        "illuminate/console": "^11.0|^12.0",
+        "illuminate/contracts": "^11.0|^12.0",
+        "illuminate/support": "^11.0|^12.0",
+        "illuminate/broadcasting": "^11.0|^12.0",
+        "illuminate/queue": "^11.0|^12.0"
     },
     "scripts": {
-        "test": "./vendor/bin/phpunit",
-        "fix": "./vendor/friendsofphp/php-cs-fixer/php-cs-fixer fix --verbose",
+        "test": "./vendor/bin/phpunit --no-coverage",
+        "fix": "./vendor/bin/php-cs-fixer fix --verbose",
         "static": "./vendor/bin/phpstan analyse",
         "all": [
             "@test",

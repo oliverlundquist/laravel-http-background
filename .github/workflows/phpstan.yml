@@ -1,4 +1,4 @@
-name: PHP-CS-Fixer
+name: PHPStan
 on: push
 
 jobs:
@@ -13,7 +13,9 @@ jobs:
       - uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ matrix.php-versions }}
-          tools: php-cs-fixer
+          tools: phpstan
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - run: php-cs-fixer fix --verbose --dry-run --diff
+      - run: composer require --dev orchestra/testbench
+      - run: vendor/bin/testbench workbench:install --no-interaction
+      - run: phpstan analyse

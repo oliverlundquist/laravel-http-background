@@ -3,7 +3,6 @@
 namespace OliverLundquist\HttpBackground\Tests;
 
 use Illuminate\Support\Str;
-use OliverLundquist\HttpBackground\Facades\HttpBg;
 use OliverLundquist\HttpBackground\HttpBgRequest;
 
 class HttpBgRequestTest extends TestCase
@@ -17,6 +16,7 @@ class HttpBgRequestTest extends TestCase
             'url'                 => 'https://httpbin.org/get',
             'requestBody'         => 'some payload',
             'contentType'         => 'text/plain',
+            'accept'              => 'text/plain',
             'tag'                 => 'webhook_id_222',
             'connectionTimeout'   => 111,
             'totalRequestTimeout' => 222,
@@ -53,6 +53,7 @@ class HttpBgRequestTest extends TestCase
             'url'                   => 'https://httpbin.org/get',
             'request_body'          => 'some payload',
             'content_type'          => 'text/plain',
+            'accept'                => 'text/plain',
             'tag'                   => 'webhook_id_222',
             'connection_timeout'    => 111,
             'total_request_timeout' => 222,
@@ -84,16 +85,18 @@ class HttpBgRequestTest extends TestCase
 
     public function testValidateRequestSuccess()
     {
-        $bgRequest         = HttpBg::getRequest();
-        $bgRequest->url    = 'https://www.php.net/';
-        $bgRequest->method = 'get';
+        $bgRequest              = HttpBgRequest::newFromArray([]);
+        $bgRequest->url         = 'https://www.php.net/';
+        $bgRequest->method      = 'get';
+        $bgRequest->contentType = 'application/json';
         $bgRequest->requestBody = json_encode(['json' => 'payload']);
         $this->assertTrue($bgRequest->validateRequest());
         $this->assertSame($bgRequest->validateRequest(true), []);
 
-        $bgRequest         = HttpBg::getRequest();
-        $bgRequest->url    = '/some/path?php=awesome&so=is#laravel';
-        $bgRequest->method = 'GET';
+        $bgRequest              = HttpBgRequest::newFromArray([]);
+        $bgRequest->url         = '/some/path?php=awesome&so=is#laravel';
+        $bgRequest->method      = 'GET';
+        $bgRequest->contentType = 'application/json';
         $bgRequest->requestBody = json_encode(['json' => 'payload']);
         $this->assertTrue($bgRequest->validateRequest());
         $this->assertSame($bgRequest->validateRequest(true), []);
@@ -101,24 +104,25 @@ class HttpBgRequestTest extends TestCase
 
     public function testValidateRequestFail()
     {
-        $bgRequest         = HttpBg::getRequest();
-        $bgRequest->url    = '';
-        $bgRequest->method = '';
+        $bgRequest              = HttpBgRequest::newFromArray([]);
+        $bgRequest->url         = '';
+        $bgRequest->method      = '';
         $bgRequest->requestBody = '';
         $this->assertFalse($bgRequest->validateRequest());
         $this->assertSame(count($bgRequest->validateRequest(true)), 5);
 
-        $bgRequest         = HttpBg::getRequest();
-        $bgRequest->url    = 'https//httpbinzzzz.yx/get';
-        $bgRequest->method = 'getz';
+        $bgRequest              = HttpBgRequest::newFromArray([]);
+        $bgRequest->url         = 'https//httpbinzzzz.yx/get';
+        $bgRequest->method      = 'getz';
         $bgRequest->requestBody = 'plain-text payload';
         $this->assertFalse($bgRequest->validateRequest());
-        $this->assertSame(count($bgRequest->validateRequest(true)), 5);
+        $this->assertSame(count($bgRequest->validateRequest(true)), 6);
 
-        $bgRequest         = HttpBg::getRequest();
-        $bgRequest->url    = 'path/without/slash';
-        $bgRequest->method = 'PUT\'T';
+        $bgRequest              = HttpBgRequest::newFromArray([]);
+        $bgRequest->url         = 'path/without/slash';
+        $bgRequest->method      = 'PUT\'T';
         $bgRequest->requestBody = '<xml><hey/></xml>';
+        $bgRequest->contentType = 'application/xml';
         $this->assertFalse($bgRequest->validateRequest());
         $this->assertSame(count($bgRequest->validateRequest(true)), 5);
     }
@@ -133,6 +137,7 @@ class HttpBgRequestTest extends TestCase
             'url'                 => 'https://httpbin.org/get',
             'requestBody'         => 'some payload',
             'contentType'         => 'text/plain',
+            'accept'              => 'text/plain',
             'tag'                 => 'webhook_id_222',
             'connectionTimeout'   => 111,
             'totalRequestTimeout' => 222,
@@ -156,7 +161,8 @@ class HttpBgRequestTest extends TestCase
         $results = [
             'pid'                   => 0,
             'request_body'          => '',
-            'content_type'          => 'application/json',
+            'content_type'          => '',
+            'accept'                => '',
             'connection_timeout'    => 10,
             'total_request_timeout' => 30,
             'attempts'              => 0,

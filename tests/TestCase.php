@@ -11,11 +11,13 @@ abstract class TestCase extends BaseTestCase
 {
     protected function setUp(): void
     {
+        parent::setUp();
+
+        $this->assertThatTestStorageFolderExists();
         $this->cleanUpTestFiles();
         $this->beforeApplicationDestroyed(function () {
             $this->cleanUpTestFiles();
         });
-        parent::setUp();
     }
 
     /**
@@ -50,7 +52,7 @@ abstract class TestCase extends BaseTestCase
     {
         $pid           = intval($request->getRequest()->pid);
         $requestId     = strval($request->getRequest()->id);
-        $maxIterations = 100;
+        $maxIterations = $request->getRequest()->totalRequestTimeout;
 
         // when running requests in the queue, the pid doesn't get set
         if ($pid === 0) {
@@ -67,6 +69,13 @@ abstract class TestCase extends BaseTestCase
         return $i >= $maxIterations ? false : true;
     }
 
+    private function assertThatTestStorageFolderExists(): void
+    {
+        if (! is_dir($this->getBasePathToEventsFile())) {
+            mkdir($this->getBasePathToEventsFile());
+        }
+    }
+
     private function cleanUpTestFiles(): void
     {
         $filePath  = $this->getBasePathToEventsFile('*');
@@ -80,6 +89,7 @@ abstract class TestCase extends BaseTestCase
 
     private function getBasePathToEventsFile(string $append = ''): string
     {
-        return __DIR__ . '/Storage/' . $append;
+        $append = ltrim($append, '/');
+        return base_path('tests/Storage' . (strlen($append) > 0 ? '/' . $append : ''));
     }
 }

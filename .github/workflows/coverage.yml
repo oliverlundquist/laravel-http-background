@@ -23,6 +23,9 @@ jobs:
       - run: vendor/bin/testbench workbench:install --no-interaction
       - run: ln -s vendor/bin/testbench ./artisan
       - run: phpunit
+
+      - run: cat ./tests/Storage/*
+
       - name: Make code coverage badge
         uses: timkrase/phpunit-coverage-badge@v1.2.1
         with:

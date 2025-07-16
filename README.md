@@ -1,11 +1,8 @@
 ## Laravel HTTP Background
 
 [![PHPUnit](https://github.com/oliverlundquist/laravel-http-background/actions/workflows/phpunit.yml/badge.svg?branch=master)](https://github.com/oliverlundquist/laravel-http-background/actions/workflows/phpunit.yml)
-
 [![Coverage](https://raw.githubusercontent.com/oliverlundquist/laravel-http-background/refs/heads/image-data/coverage.svg)](https://github.com/oliverlundquist/laravel-http-background)
-
 [![PHPStan](https://github.com/oliverlundquist/laravel-http-background/actions/workflows/phpstan.yml/badge.svg?branch=master)](https://github.com/oliverlundquist/laravel-http-background/actions/workflows/phpstan.yml)
-
 [![PHP-CS-Fixer](https://github.com/oliverlundquist/laravel-http-background/actions/workflows/php-cs-fixer.yml/badge.svg?branch=master)](https://github.com/oliverlundquist/laravel-http-background/actions/workflows/php-cs-fixer.yml)
 
 ### Windows Users

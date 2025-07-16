@@ -55,21 +55,21 @@ class HttpBgCommand
             '%{response_code}'
         ]);
         $curlCommand = <<<CURL_COMMAND
-            curl \
-                --write-out '{$writeOut}' \
-                --connect-timeout {$request->connectionTimeout} \
-                --max-time {$request->totalRequestTimeout} \
-                --output /dev/null \
-                --silent \
-                --location \
-                --request '{$request->method}' \
+        curl \
+            --write-out '{$writeOut}' \
+            --connect-timeout {$request->connectionTimeout} \
+            --max-time {$request->totalRequestTimeout} \
+            --output /dev/null \
+            --silent \
+            --location \
+            --request '{$request->method}' \
 
         CURL_COMMAND;
 
         // set accept header
         if (strlen($request->accept) > 0) {
             $curlCommand .= <<<CURL_COMMAND
-                    --header 'Accept: {$request->accept}' \
+                --header 'Accept: {$request->accept}' \
 
             CURL_COMMAND;
         }
@@ -77,7 +77,7 @@ class HttpBgCommand
         // set content-type header
         if (strlen($request->contentType) > 0 && strlen($request->requestBody) > 0) {
             $curlCommand .= <<<CURL_COMMAND
-                    --header 'Content-Type: {$request->contentType}' \
+                --header 'Content-Type: {$request->contentType}' \
 
             CURL_COMMAND;
         }
@@ -85,14 +85,14 @@ class HttpBgCommand
         // set request body
         if (strlen($request->requestBody) > 0) {
             $curlCommand .= <<<CURL_COMMAND
-                    --data '{$request->requestBody}' \
+                --data '{$request->requestBody}' \
 
             CURL_COMMAND;
         }
 
         // set request url
         $curlCommand .= <<<CURL_COMMAND
-                '{$request->url}'
+            '{$request->url}'
         CURL_COMMAND;
 
         return $curlCommand;

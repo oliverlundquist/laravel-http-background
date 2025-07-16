@@ -45,15 +45,15 @@ class HttpBgCommandTest extends TestCase
         $bgRequest->method = 'get';
         $bgRequest->url    = 'https://httpbin.org/get';
 
-        $expectedCommand = "    curl \
-        --write-out 'HttpBgRequest_6877075681de6 10 30 %{time_connect} %{time_total} %{exitcode} %{response_code}' \
-        --connect-timeout 10 \
-        --max-time 30 \
-        --output /dev/null \
-        --silent \
-        --location \
-        --request 'GET' \
-        'https://httpbin.org/get'";
+        $expectedCommand = "curl \
+    --write-out 'HttpBgRequest_6877075681de6 10 30 %{time_connect} %{time_total} %{exitcode} %{response_code}' \
+    --connect-timeout 10 \
+    --max-time 30 \
+    --output /dev/null \
+    --silent \
+    --location \
+    --request 'GET' \
+    'https://httpbin.org/get'";
 
         $actualCommand = HttpBgCommand::buildCurlCommand($bgRequest);
         $this->assertSame($expectedCommand, $actualCommand);
@@ -72,18 +72,18 @@ class HttpBgCommandTest extends TestCase
         $bgRequest->accept              = 'application/vnd.api+json';
 
         $data = "{\"key\":\"something'\'' & kill -9 1\"}";
-        $expectedCommand = "    curl \
-        --write-out 'HttpBgRequest_6877075681de6 500 1000 %{time_connect} %{time_total} %{exitcode} %{response_code}' \
-        --connect-timeout 500 \
-        --max-time 1000 \
-        --output /dev/null \
-        --silent \
-        --location \
-        --request 'GET' \
-        --header 'Accept: application/vnd.api+json' \
-        --header 'Content-Type: application/json' \
-        --data '{$data}' \
-        'https://httpbin.org/get'";
+        $expectedCommand = "curl \
+    --write-out 'HttpBgRequest_6877075681de6 500 1000 %{time_connect} %{time_total} %{exitcode} %{response_code}' \
+    --connect-timeout 500 \
+    --max-time 1000 \
+    --output /dev/null \
+    --silent \
+    --location \
+    --request 'GET' \
+    --header 'Accept: application/vnd.api+json' \
+    --header 'Content-Type: application/json' \
+    --data '{$data}' \
+    'https://httpbin.org/get'";
 
         $actualCommand = HttpBgCommand::buildCurlCommand($bgRequest);
         $this->assertSame($expectedCommand, $actualCommand);

@@ -9,7 +9,7 @@ class HttpBgCommand
 {
     public static function execute(HttpBgRequest $request, string $callbackCommand = 'http-background:request-callback'): int
     {
-        $basePath    = base_path();
+        $basePath    = static::getBasePath();
         $curlCommand = static::buildCurlCommand($request);
 
         $command = <<<COMMAND
@@ -32,6 +32,11 @@ class HttpBgCommand
             $request->{$property} = rtrim(ltrim(escapeshellarg($request->{$property}), '\''), '\'');
         }
         return $request;
+    }
+
+    public static function getBasePath()
+    {
+        return env('GITHUB_ACTIONS') === true ? __DIR__ . '/../' : base_path();
     }
 
     public static function buildCurlCommand(HttpBgRequest $request): string

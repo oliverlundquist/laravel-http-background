@@ -18,7 +18,6 @@ jobs:
           tools: phpunit
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          GITHUB_ACTIONS: true
       - run: composer require --dev orchestra/testbench:${{ matrix.testbench-versions }}
       - run: vendor/bin/testbench workbench:install --no-interaction
       - run: ln -s vendor/bin/testbench ./artisan

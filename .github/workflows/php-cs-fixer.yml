@@ -3,6 +3,7 @@ on: push
 
 jobs:
   run:
+    name: PHP-CS-Fixer
     runs-on: ${{ matrix.operating-system }}
     strategy:
       matrix:

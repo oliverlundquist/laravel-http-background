@@ -3,6 +3,7 @@ on: push
 
 jobs:
   run:
+    name: PHPUnit
     runs-on: ${{ matrix.operating-system }}
     strategy:
       matrix:

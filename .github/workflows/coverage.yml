@@ -5,6 +5,7 @@ permissions: write-all
 
 jobs:
   run:
+    name: Coverage
     runs-on: ${{ matrix.operating-system }}
     strategy:
       matrix:

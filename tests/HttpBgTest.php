@@ -143,6 +143,8 @@ class HttpBgTest extends TestCase
     {
         $request = HttpBg::get('https://httpbin.org/get');
 
+        sleep(3);
+
         $this->assertFiredEvents($request, [
             'HttpBgRequestSending',
             'HttpBgRequestSent',

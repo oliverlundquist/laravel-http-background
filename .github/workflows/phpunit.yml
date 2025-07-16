@@ -26,5 +26,4 @@ jobs:
       - run: phpunit --filter testSuccessfulRequestEvents$ --no-coverage
       - run: ls -l
       - run: ls -l ./tests/Storage
-      - run: php artisan http-background:request-callback
       - run: cat ./tests/Storage/*

@@ -46,9 +46,6 @@ class HttpBgCommand
             ({$curlCommand} | xargs php artisan {$callbackCommand}) > /dev/null 2>&1 & echo $!
         COMMAND;
 
-dump($basePath);
-dump($command);
-
         HttpBgRequestSending::dispatch($request);
         $request->pid      = intval(exec($command));
         $request->attempts = $request->attempts + 1;

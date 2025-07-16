@@ -21,13 +21,4 @@ jobs:
       - run: composer require --dev orchestra/testbench:${{ matrix.testbench-versions }}
       - run: vendor/bin/testbench workbench:install --no-interaction
       - run: ln -s vendor/bin/testbench ./artisan
-      - run: phpunit --filter testSuccessfulRequestEvents$ --no-coverage
-      - run: cat ./tests/Storage/*
-      # - run: which curl
-      # - run: "curl --write-out 'requestid_12 10 30 %{time_connect} %{time_total} %{exitcode} %{response_code}' --connect-timeout 10 --max-time 30 --output /dev/null --silent --location --header 'Content-Type: application/json' --header 'Accept: application/json' --request 'get' --data '' 'https://httpbin.org/get'"
-      # - run: "(curl --write-out 'requestid_12 10 30 %{time_connect} %{time_total} %{exitcode} %{response_code}' --connect-timeout 10 --max-time 30 --output /dev/null --silent --location --header 'Content-Type: application/json' --header 'Accept: application/json' --request 'get' --data '' 'https://httpbin.org/delay/3' | xargs php artisan http-background:request-callback) > /dev/null 2>&1 & echo $!"
-      # - run: "curl --write-out '%{response_code}' --connect-timeout 10 --max-time 30 --output /dev/null --silent --location --header 'Content-Type: application/json' --header 'Accept: application/json' --request 'get' --data '' 'https://httpbin.org/get'"
-      # - run: "curl --connect-timeout 10 --max-time 30 --location --header 'Content-Type: application/json' --header 'Accept: application/json' --request 'get' --data '' 'https://httpbin.org/get'"
-      # - run: "curl --write-out '%{response_code}' --connect-timeout 10 --max-time 30 --output /dev/null --silent --location --header 'Content-Type: application/json' --header 'Accept: application/json' --request 'get' 'https://httpbin.org/get'"
-      # - run: "curl --connect-timeout 10 --max-time 30 --location --header 'Content-Type: application/json' --header 'Accept: application/json' --request 'get' 'https://httpbin.org/get'"
-      # # - run: ps aux
+      - run: phpunit --no-coverage

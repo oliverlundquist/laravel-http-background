@@ -16,35 +16,35 @@ final class HttpBgEventsProvider extends ServiceProvider
     public function boot(): void
     {
         Event::listen(function (HttpBgRequestSending $event) {
-            $filePath = __DIR__ . '/../Storage/' . $event->request->id . '_events.txt';
+            $filePath = base_path('tests/Storage/' . $event->request->id . '_events.txt');
             file_put_contents($filePath, 'HttpBgRequestSending' . PHP_EOL, FILE_APPEND);
         });
 
         Event::listen(function (HttpBgRequestSent $event) {
-            $filePath = __DIR__ . '/../Storage/' . $event->request->id . '_events.txt';
+            $filePath = base_path('tests/Storage/' . $event->request->id . '_events.txt');
             file_put_contents($filePath, 'HttpBgRequestSent' . PHP_EOL, FILE_APPEND);
 
-            $filePath = __DIR__ . '/../Storage/' . $event->request->id . '_pid.txt';
+            $filePath = base_path('tests/Storage/' . $event->request->id . '_pid.txt');
             file_put_contents($filePath, $event->request->pid);
         });
 
         Event::listen(function (HttpBgRequestComplete $event) {
-            $filePath = __DIR__ . '/../Storage/' . $event->requestId . '_events.txt';
+            $filePath = base_path('tests/Storage/' . $event->requestId . '_events.txt');
             file_put_contents($filePath, 'HttpBgRequestComplete' . PHP_EOL, FILE_APPEND);
         });
 
         Event::listen(function (HttpBgRequestSuccess $event) {
-            $filePath = __DIR__ . '/../Storage/' . $event->requestId . '_events.txt';
+            $filePath = base_path('tests/Storage/' . $event->requestId . '_events.txt');
             file_put_contents($filePath, 'HttpBgRequestSuccess' . PHP_EOL, FILE_APPEND);
         });
 
         Event::listen(function (HttpBgRequestFailed $event) {
-            $filePath = __DIR__ . '/../Storage/' . $event->requestId . '_events.txt';
+            $filePath = base_path('tests/Storage/' . $event->requestId . '_events.txt');
             file_put_contents($filePath, 'HttpBgRequestFailed' . PHP_EOL, FILE_APPEND);
         });
 
         Event::listen(function (HttpBgRequestTimeout $event) {
-            $filePath = __DIR__ . '/../Storage/' . $event->requestId . '_events.txt';
+            $filePath = base_path('tests/Storage/' . $event->requestId . '_events.txt');
             file_put_contents($filePath, 'HttpBgRequestTimeout' . PHP_EOL, FILE_APPEND);
         });
     }

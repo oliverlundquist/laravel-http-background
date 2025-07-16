@@ -142,6 +142,7 @@ class HttpBgTest extends TestCase
     public function testSuccessfulRequestEvents()
     {
         $request = HttpBg::get('https://httpbin.org/get');
+
         $this->assertFiredEvents($request, [
             'HttpBgRequestSending',
             'HttpBgRequestSent',
@@ -214,23 +215,29 @@ class HttpBgTest extends TestCase
         $request = HttpBg::withBody($body)->getRequest();
         $this->assertSame($request->requestBody, $body);
         $this->assertSame($request->contentType, 'application/json');
+        $this->assertSame($request->accept, 'application/json');
 
         $body        = json_encode(['key' => 'value']);
         $contentType = 'application/vnd.api+json';
-        $request     = HttpBg::withBody($body, $contentType)->getRequest();
+        $accept      = 'application/vnd.api+json';
+        $request     = HttpBg::withBody($body, $contentType, $accept)->getRequest();
         $this->assertSame($request->requestBody, $body);
         $this->assertSame($request->contentType, $contentType);
+        $this->assertSame($request->accept, $accept);
 
         $body    = json_encode(['key' => 'value']);
         $request = Http::background()->withBody($body)->getRequest();
         $this->assertSame($request->requestBody, $body);
         $this->assertSame($request->contentType, 'application/json');
+        $this->assertSame($request->accept, 'application/json');
 
         $body        = json_encode(['key' => 'value']);
         $contentType = 'application/vnd.api+json';
-        $request     = Http::background()->withBody($body, $contentType)->getRequest();
+        $accept      = 'application/vnd.api+json';
+        $request     = Http::background()->withBody($body, $contentType, $accept)->getRequest();
         $this->assertSame($request->requestBody, $body);
         $this->assertSame($request->contentType, $contentType);
+        $this->assertSame($request->accept, $accept);
     }
 
     public function testContentType()
@@ -242,6 +249,17 @@ class HttpBgTest extends TestCase
         $contentType = 'application/vnd.api+json';
         $request     = Http::background()->contentType($contentType)->getRequest();
         $this->assertSame($request->contentType, $contentType);
+    }
+
+    public function testAccept()
+    {
+        $accept  = 'application/vnd.api+json';
+        $request = HttpBg::accept($accept)->getRequest();
+        $this->assertSame($request->accept, $accept);
+
+        $accept  = 'application/vnd.api+json';
+        $request = Http::background()->accept($accept)->getRequest();
+        $this->assertSame($request->accept, $accept);
     }
 
     public function testConnectTimeout()

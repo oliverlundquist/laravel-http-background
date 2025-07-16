@@ -11,7 +11,8 @@ class HttpBgRequest
     public string $method;
     public string $url;
     public string $requestBody = '';
-    public string $contentType = 'application/json';
+    public string $contentType = '';
+    public string $accept = '';
     public string $tag;
     public int $connectionTimeout = 10;
     public int $totalRequestTimeout = 30;
@@ -61,6 +62,7 @@ class HttpBgRequest
             $this->validateMethod(strval($this->method)),
             $this->validateUrl(strval($this->url)),
             $this->validateRequestBody(strval($this->requestBody)),
+            $this->validateContentTypeHeader(strval($this->contentType), strval($this->requestBody))
         );
         return $returnErrorsMessages
             ? $errors
@@ -117,6 +119,21 @@ class HttpBgRequest
         }
         if (is_null(json_decode($body))) {
             $errors[] = 'Invalid JSON Request Body (json_decode)';
+        }
+        return $errors;
+    }
+
+    /**
+     * @return array<int, string>
+     */
+    protected function validateContentTypeHeader(string $contentType, string $body): array
+    {
+        $errors = [];
+        if (strlen($body) === 0) {
+            return [];
+        }
+        if (strlen($contentType) === 0) {
+            $errors[] = 'contentType must be set when requestBody is set';
         }
         return $errors;
     }

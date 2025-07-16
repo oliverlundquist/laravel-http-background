@@ -95,11 +95,12 @@ class HttpBg
         return $this;
     }
 
-    public function withBody(string $content, string $contentType = 'application/json'): static
+    public function withBody(string $content, string $contentType = 'application/json', string $accept = 'application/json'): static
     {
         $request = $this->getRequest();
         $request->requestBody = $content;
-        $request->contentType = $contentType;
+        $this->contentType($contentType);
+        $this->accept($accept);
         return $this;
     }
 
@@ -107,6 +108,13 @@ class HttpBg
     {
         $request = $this->getRequest();
         $request->contentType = $contentType;
+        return $this;
+    }
+
+    public function accept(string $accept): static
+    {
+        $request = $this->getRequest();
+        $request->accept = $accept;
         return $this;
     }
 

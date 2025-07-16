@@ -5,7 +5,7 @@ $fileBlocks     = $cloverXmlFile->xpath('/coverage/project/package/file');
 $uncoveredLines = 0;
 
 foreach ($fileBlocks as $fileBlock) {
-    $file  = (string) $fileBlock->class->attributes()->name;
+    $file  = strval($fileBlock->class->attributes()->name);
     $lines = $fileBlock->xpath('line');
     foreach ($lines as $line) {
         if (intval(strval($line->attributes()->count)) === 0) {

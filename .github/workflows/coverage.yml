@@ -20,27 +20,30 @@ jobs:
           tools: phpunit
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - run: which python
-      - run: which pip
-      - uses: actions/setup-python@v5
-        with:
-          python-version: '3.13'
-      - run: which python
-      - run: which pip
-      - run: pip install gcovr
+      # - run: which python
+      # - run: which pip
+      # - uses: actions/setup-python@v5
+      #   with:
+      #     python-version: '3.13'
+      # - run: which python
+      # - run: which pip
       - run: composer require --dev orchestra/testbench
       - run: vendor/bin/testbench workbench:install --no-interaction
       - run: ln -s vendor/bin/testbench ./artisan
       - run: phpunit
+
+      - run: ls -l .
+
+      - run: pip install gcovr
       - run: gcovr --clover-pretty --clover clover.xml
       - run: gcovr --txt --clover clover.xml
-      # - name: Make code coverage badge
-      #   uses: timkrase/phpunit-coverage-badge@v1.2.1
+
+      # - uses: timkrase/phpunit-coverage-badge@v1.2.1
       #   with:
       #     coverage_badge_path: output/coverage.svg
       #     push_badge: false
-      # - name: Git push to image-data branch
-      #   uses: peaceiris/actions-gh-pages@v3
+
+      # - uses: peaceiris/actions-gh-pages@v3
       #   with:
       #     publish_dir: ./output
       #     publish_branch: image-data

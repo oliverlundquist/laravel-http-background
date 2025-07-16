@@ -26,3 +26,5 @@ jobs:
       - run: phpunit --filter testSuccessfulRequestEvents$ --no-coverage
       - run: ls -l
       - run: ls -l ./tests/Storage
+      - run: ps aux
+      - run: cat ./tests/Storage/*

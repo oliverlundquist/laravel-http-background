@@ -1,6 +1,6 @@
 {
     "name": "oliverlundquist/laravel-http-background",
-    "description": "Non-Blocking HTTP Requests.",
+    "description": "Non-Blocking HTTP Requests in Laravel.",
     "type": "library",
     "license": "MIT",
     "support": {

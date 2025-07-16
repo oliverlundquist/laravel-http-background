@@ -22,12 +22,12 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - run: which python
       - run: which pip
-      - name: Install Python
       - uses: actions/setup-python@v5
         with:
           python-version: '3.13'
-      - name: Install PIP Dependencies
-        run: pip install gcovr
+      - run: which python
+      - run: which pip
+      - run: pip install gcovr
       - run: composer require --dev orchestra/testbench
       - run: vendor/bin/testbench workbench:install --no-interaction
       - run: ln -s vendor/bin/testbench ./artisan

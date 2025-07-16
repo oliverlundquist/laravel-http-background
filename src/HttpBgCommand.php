@@ -9,7 +9,7 @@ class HttpBgCommand
 {
     public static function execute(HttpBgRequest $request, string $callbackCommand = 'http-background:request-callback'): int
     {
-        $basePath = base_path();
+        $basePath = static::getBasePath();
         $request  = tap(clone $request, function ($request) {
             $request         = static::escapeArguments($request);
             $request->method = strtoupper($request->method);
@@ -64,5 +64,14 @@ dump($command);
             $request->{$property} = rtrim(ltrim(escapeshellarg($request->{$property}), '\''), '\'');
         }
         return $request;
+    }
+
+    protected static function getBasePath(): string
+    {
+        $basePath = base_path();
+        if (strpos($basePath, 'vendor') !== false && strpos($basePath, 'testbench') !== false) {
+            $basePath = __DIR__ . '/../';
+        }
+        return $basePath;
     }
 }

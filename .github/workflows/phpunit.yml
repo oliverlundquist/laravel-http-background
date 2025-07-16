@@ -21,4 +21,7 @@ jobs:
       - run: composer require --dev orchestra/testbench:${{ matrix.testbench-versions }}
       - run: vendor/bin/testbench workbench:install --no-interaction
       - run: ln -s vendor/bin/testbench ./artisan
+      - run: cd /home/runner/work/laravel-http-background/laravel-http-background/vendor/orchestra/testbench-core/laravel && php artisan
+      - run: ln -s vendor/bin/testbench vendor/orchestra/testbench-core/laravel/artisan
+      - run: cd /home/runner/work/laravel-http-background/laravel-http-background/vendor/orchestra/testbench-core/laravel && php artisan
       - run: phpunit --no-coverage

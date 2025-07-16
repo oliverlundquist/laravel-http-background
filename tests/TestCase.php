@@ -13,8 +13,6 @@ abstract class TestCase extends BaseTestCase
     {
         parent::setUp();
 
-        dump(base_path());
-
         $this->assertThatTestStorageFolderExists();
         $this->cleanUpTestFiles();
         $this->beforeApplicationDestroyed(function () {

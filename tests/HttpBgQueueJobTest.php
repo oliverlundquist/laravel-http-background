@@ -7,7 +7,7 @@ use OliverLundquist\HttpBackground\HttpBgQueueJob;
 
 class HttpBgQueueJobTest extends TestCase
 {
-    public function testCommandEscapeArguments()
+    public function testCommandDispatch()
     {
         $bgRequest = HttpBg::getRequest();
         $bgRequest->method = 'get';

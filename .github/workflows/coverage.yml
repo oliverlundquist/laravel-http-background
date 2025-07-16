@@ -35,8 +35,8 @@ jobs:
       - run: ls -l .
 
       - run: pip install gcovr
-      - run: gcovr --clover-pretty --clover clover.xml
-      - run: gcovr --txt --clover clover.xml
+      - run: gcovr --txt ./clover.xml
+      - run: gcovr --txt clover.xml
 
       # - uses: timkrase/phpunit-coverage-badge@v1.2.1
       #   with:

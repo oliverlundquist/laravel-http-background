@@ -13,6 +13,8 @@ abstract class TestCase extends BaseTestCase
     {
         parent::setUp();
 
+        dump(env('GITHUB_ACTIONS'));
+
         $this->assertThatTestStorageFolderExists();
         $this->cleanUpTestFiles();
         $this->beforeApplicationDestroyed(function () {

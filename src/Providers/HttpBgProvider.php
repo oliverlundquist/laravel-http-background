@@ -17,5 +17,6 @@ final class HttpBgProvider extends ServiceProvider
         Http::macro('background', function () {
             return new RealHttpBg;
         });
+        dump(env('GITHUB_ACTIONS'));
     }
 }

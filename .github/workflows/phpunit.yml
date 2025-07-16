@@ -26,5 +26,6 @@ jobs:
       - run: phpunit --filter testSuccessfulRequestEvents$ --no-coverage
       - run: ls -l
       - run: ls -l ./tests/Storage
-      - run: ps aux
+      - run: cat vendor/orchestra/testbench-core/laravel/storage/logs/laravel.log
+      - run: php artisan http-background:request-callback
       - run: cat ./tests/Storage/*

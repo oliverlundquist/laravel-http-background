@@ -34,7 +34,7 @@ class HttpBgCommand
         return $request;
     }
 
-    public static function getBasePath()
+    public static function getBasePath(): string
     {
         return env('GITHUB_ACTIONS') === true ? __DIR__ . '/../' : base_path();
     }

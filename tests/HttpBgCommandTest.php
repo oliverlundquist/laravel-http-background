@@ -16,7 +16,7 @@ class HttpBgCommandTest extends TestCase
         $bgRequest->requestBody = "something' & kill -9 1";
         $bgRequest->contentType = "something' & kill -9 1";
 
-        $bgRequest->pid = HttpBgCommand::execute(clone $bgRequest);
+        $bgRequest->pid = HttpBgCommand::execute($bgRequest);
         $request        = HttpBg::setRequest($bgRequest);
         $this->assertFiredEvents($request, [
             'HttpBgRequestSending',
@@ -26,7 +26,7 @@ class HttpBgCommandTest extends TestCase
         ]);
         $this->assertTrue($this->processHasExited($request));
 
-        $bgRequest->pid = HttpBgCommand::execute(clone $bgRequest);
+        $bgRequest->pid = HttpBgCommand::execute($bgRequest);
         $request        = Http::background()->setRequest($bgRequest);
         $this->assertFiredEvents($request, [
             'HttpBgRequestSending',

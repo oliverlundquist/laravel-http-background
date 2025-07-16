@@ -10,7 +10,10 @@ class HttpBgCommand
     public static function execute(HttpBgRequest $request, string $callbackCommand = 'http-background:request-callback'): int
     {
         $basePath = base_path();
-        $request  = static::escapeArguments($request);
+        $request  = tap(clone $request, function ($request) {
+            $request         = static::escapeArguments($request);
+            $request->method = strtoupper($request->method);
+        });
         $writeOut = implode(' ', [
             strval($request->id),
             strval($request->connectionTimeout),

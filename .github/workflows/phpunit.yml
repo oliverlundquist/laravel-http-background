@@ -23,4 +23,6 @@ jobs:
       - run: ln -s vendor/bin/testbench ./artisan
       - run: phpunit --filter testSuccessfulRequestEvents$ --no-coverage
       - run: cat ./tests/Storage/*
+      - run: which curl
+      - run: curl https://httpbin.org/get
       - run: ps aux

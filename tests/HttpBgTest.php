@@ -142,9 +142,6 @@ class HttpBgTest extends TestCase
     public function testSuccessfulRequestEvents()
     {
         $request = HttpBg::get('https://httpbin.org/get');
-
-        sleep(3);
-
         $this->assertFiredEvents($request, [
             'HttpBgRequestSending',
             'HttpBgRequestSent',

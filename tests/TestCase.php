@@ -11,10 +11,10 @@ abstract class TestCase extends BaseTestCase
 {
     protected function setUp(): void
     {
-        $this->cleanUpTestFiles();
-        $this->beforeApplicationDestroyed(function () {
-            $this->cleanUpTestFiles();
-        });
+        // $this->cleanUpTestFiles();
+        // $this->beforeApplicationDestroyed(function () {
+        //     $this->cleanUpTestFiles();
+        // });
         parent::setUp();
     }
 

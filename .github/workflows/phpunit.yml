@@ -21,9 +21,6 @@ jobs:
       - run: composer require --dev orchestra/testbench:${{ matrix.testbench-versions }}
       - run: vendor/bin/testbench workbench:install --no-interaction
       - run: ln -s vendor/bin/testbench ./artisan
-      - run: pwd
-      - run: ls -l
       - run: phpunit --filter testSuccessfulRequestEvents$ --no-coverage
-      - run: ls -l
-      - run: ls -l ./tests/Storage
       - run: cat ./tests/Storage/*
+      - run: ps aux

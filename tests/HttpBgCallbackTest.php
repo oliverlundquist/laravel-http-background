@@ -123,7 +123,7 @@ class HttpBgCallbackTest extends TestCase
             'request_id'            => 'HttpBgRequest_687455225c765',
             'connection_timeout'    => '10',
             'total_request_timeout' => '30',
-            'curl_time_connect'     => '30.009058',
+            'curl_time_connect'     => '10.009058',
             'curl_time_total'       => '30.009058',
             'curl_exitcode'         => '999',
             'curl_response_code'    => '000',

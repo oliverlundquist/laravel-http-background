@@ -166,6 +166,32 @@ class HttpBgTest extends TestCase
         $this->assertTrue($this->processHasExited($request));
     }
 
+    public function testFailedRequestEventWithHttpCodeLessThan200()
+    {
+        $request = HttpBg::get('https://httpbin.org/status/101');
+
+        $this->assertFiredEvents($request, [
+            'HttpBgRequestSending',
+            'HttpBgRequestSent',
+            'HttpBgRequestComplete',
+            'HttpBgRequestFailed'
+        ]);
+        $this->assertTrue($this->processHasExited($request));
+    }
+
+    public function testFailedRequestEventWithHttpCodeGreaterThan299()
+    {
+        $request = HttpBg::get('https://httpbin.org/status/300');
+
+        $this->assertFiredEvents($request, [
+            'HttpBgRequestSending',
+            'HttpBgRequestSent',
+            'HttpBgRequestComplete',
+            'HttpBgRequestFailed'
+        ]);
+        $this->assertTrue($this->processHasExited($request));
+    }
+
     public function testTimedOutRequestEvents()
     {
         $request = HttpBg::connectTimeout(1)->timeout(2)->get('http://10.255.255.1/get');

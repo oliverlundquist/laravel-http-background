@@ -42,7 +42,7 @@ class AppServiceProvider extends ServiceProvider
             Cache::put($request->id, $request->toArray());
         });
 
-        // refetch request after it has completed
+        // rebuild request object after it has completed
         Event::listen(function (HttpBgRequestFailed|HttpBgRequestTimeout $event) {
             $requestId = $event->requestId;
             $request   = HttpBgRequest::newFromArray(Cache::get($requestId, []));

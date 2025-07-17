@@ -168,7 +168,7 @@ class HttpBgTest extends TestCase
 
     public function testFailedRequestEventWithHttpCodeLessThan200()
     {
-        $request = HttpBg::get('https://httpbin.org/status/101');
+        $request = HttpBg::get('https://httpbin.org/status/199');
 
         $this->assertFiredEvents($request, [
             'HttpBgRequestSending',

@@ -41,8 +41,50 @@ class HttpBgCallbackTest extends TestCase
             'total_request_timeout' => '30',
             'curl_time_connect'     => '0.000000',
             'curl_time_total'       => '0.006547',
-            'curl_exitcode'         => '6',
+            'curl_exitcode'         => '0',
             'curl_response_code'    => '000',
+        ];
+        $this->artisan('http-background:request-callback', $arguments);
+
+        Event::assertNotDispatched(HttpBgRequestSuccess::class);
+        Event::assertNotDispatched(HttpBgRequestTimeout::class);
+        Event::assertDispatchedTimes(HttpBgRequestFailed::class, 1);
+        Event::assertDispatchedTimes(HttpBgRequestComplete::class, 1);
+    }
+
+    public function testRequestFailedEventFiredWithResponseCodeLessThan200()
+    {
+        Event::fake();
+
+        $arguments = [
+            'request_id'            => 'HttpBgRequest_687455025b764',
+            'connection_timeout'    => '10',
+            'total_request_timeout' => '30',
+            'curl_time_connect'     => '0.000000',
+            'curl_time_total'       => '0.006547',
+            'curl_exitcode'         => '0',
+            'curl_response_code'    => '199',
+        ];
+        $this->artisan('http-background:request-callback', $arguments);
+
+        Event::assertNotDispatched(HttpBgRequestSuccess::class);
+        Event::assertNotDispatched(HttpBgRequestTimeout::class);
+        Event::assertDispatchedTimes(HttpBgRequestFailed::class, 1);
+        Event::assertDispatchedTimes(HttpBgRequestComplete::class, 1);
+    }
+
+    public function testRequestFailedEventFiredWithResponseCodeGreaterThan299()
+    {
+        Event::fake();
+
+        $arguments = [
+            'request_id'            => 'HttpBgRequest_687455025b764',
+            'connection_timeout'    => '10',
+            'total_request_timeout' => '30',
+            'curl_time_connect'     => '0.000000',
+            'curl_time_total'       => '0.006547',
+            'curl_exitcode'         => '0',
+            'curl_response_code'    => '300',
         ];
         $this->artisan('http-background:request-callback', $arguments);
 

@@ -52,6 +52,9 @@ class HttpBgCallback extends Command
         if ($curlErrorCode !== 0) {
             return false;
         }
+        if ($curlResponseCode === 0) {
+            return false;
+        }
         if ($curlResponseCode < 200) {
             return false;
         }

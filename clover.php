@@ -9,7 +9,7 @@ foreach ($fileBlocks as $fileBlock) {
     $lines = $fileBlock->xpath('line');
     foreach ($lines as $line) {
         if (intval(strval($line->attributes()->count)) === 0) {
-            echo 'Uncovered Line in ' . $file . ' on line: ' . strval($line->attributes()->num) . PHP_EOL;
+            echo 'Uncovered Line in ' . $file . ' on Line: ' . strval($line->attributes()->num) . PHP_EOL;
             $uncoveredLines = $uncoveredLines + 1;
         }
     }

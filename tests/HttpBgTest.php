@@ -332,7 +332,7 @@ class HttpBgTest extends TestCase
     {
         $request = HttpBg::getRequest();
         $request->pid = 0;
-        HttpBg::setRequest($request)->processIsRunning();
+        $this->assertFalse(HttpBg::setRequest($request)->processIsRunning());
     }
 
     public function testSendRequestWithInvalidRequest()

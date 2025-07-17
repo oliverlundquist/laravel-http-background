@@ -59,8 +59,8 @@ class HttpBgRequest
     public function validateRequest(bool $returnErrorsMessages = false): bool|array
     {
         $errors = array_merge(
-            $this->validateMethod(strval($this->method)),
-            $this->validateUrl(strval($this->url)),
+            $this->validateMethod(strval($this->method ?? '')),
+            $this->validateUrl(strval($this->url ?? '')),
             $this->validateRequestBody(strval($this->requestBody)),
             $this->validateContentTypeHeader(strval($this->contentType), strval($this->requestBody))
         );

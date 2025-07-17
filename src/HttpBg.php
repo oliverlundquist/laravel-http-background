@@ -175,6 +175,7 @@ class HttpBg
             return false;
         }
 
+        // @codeCoverageIgnoreStart
         // check if process turned into a zombie
         $isZombie = strpos(strtoupper(trim(str_replace(strval($request->pid), '', strval(exec('ps axo pid=,stat= | grep ' . $request->pid))))), 'Z') !== false;
         if ($isZombie) {
@@ -185,6 +186,7 @@ class HttpBg
             ]));
             return false;
         }
+        // @codeCoverageIgnoreEnd
         return true;
     }
 

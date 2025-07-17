@@ -62,8 +62,8 @@ class HttpBgCallback extends Command
     {
         $connectionTimeout   = intval($this->argument('connection_timeout'));
         $totalRequestTimeout = intval($this->argument('total_request_timeout'));
-        $curlTimeConnect     = intval($this->argument('curl_time_connect'));
-        $curlTimeTotal       = intval($this->argument('curl_time_total'));
+        $curlTimeConnect     = floatval($this->argument('curl_time_connect'));
+        $curlTimeTotal       = floatval($this->argument('curl_time_total'));
 
         if ($curlErrorCode === 28) {
             return true;

@@ -2,6 +2,7 @@
 
 namespace OliverLundquist\HttpBackground\Tests;
 
+use Exception;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Queue;
 use OliverLundquist\HttpBackground\Facades\HttpBg;
@@ -325,5 +326,21 @@ class HttpBgTest extends TestCase
         $request = Http::background()->setRequest($newRequest)->getRequest();
         $this->assertSame($request->method, $method);
         $this->assertSame($request->url, $url);
+    }
+
+    public function testProcessIsRunningWithPidZero()
+    {
+        $request = HttpBg::getRequest();
+        $request->pid = 0;
+        HttpBg::setRequest($request)->processIsRunning();
+    }
+
+    public function testSendRequestWithInvalidRequest()
+    {
+        $this->expectException(Exception::class);
+        $this->expectExceptionMessage('Request Method Not Set | Invalid Method Set | Request URL Not Set | Invalid URL (Laravel Validation) | Invalid URL (filter_var Validation)');
+
+        $request = Http::background()->getRequest();
+        HttpBg::send($request);
     }
 }

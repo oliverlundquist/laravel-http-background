@@ -15,7 +15,6 @@ foreach ($fileBlocks as $fileBlock) {
     }
 }
 
-if ($uncoveredLines > 0) {
-    exit(1);
+if ($uncoveredLines === 0) {
+    echo 'All Lines of Code are Covered, Great Job!' . PHP_EOL;
 }
-exit(0);

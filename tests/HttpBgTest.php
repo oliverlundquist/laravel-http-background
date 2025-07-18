@@ -22,6 +22,17 @@ class HttpBgTest extends TestCase
         $this->assertTrue($this->processHasExited($request));
     }
 
+    public function testGetWithParameters()
+    {
+        $request = HttpBg::get('https://httpbin.org/get?with=someparams');
+        $this->assertTrue($request->processIsRunning());
+        $this->assertTrue($this->processHasExited($request));
+
+        $request = Http::background()->get('https://httpbin.org/get?with=someparams');
+        $this->assertTrue($request->processIsRunning());
+        $this->assertTrue($this->processHasExited($request));
+    }
+
     public function testHead()
     {
         $request = HttpBg::head('https://httpbin.org/head');
@@ -156,6 +167,32 @@ class HttpBgTest extends TestCase
     public function testFailedRequestEvents()
     {
         $request = HttpBg::get('https://httpbinzzzz.yx/get');
+
+        $this->assertFiredEvents($request, [
+            'HttpBgRequestSending',
+            'HttpBgRequestSent',
+            'HttpBgRequestComplete',
+            'HttpBgRequestFailed'
+        ]);
+        $this->assertTrue($this->processHasExited($request));
+    }
+
+    public function testFailedRequestEventWithHttpCodeLessThan200()
+    {
+        $request = HttpBg::get('https://httpbin.org/status/199');
+
+        $this->assertFiredEvents($request, [
+            'HttpBgRequestSending',
+            'HttpBgRequestSent',
+            'HttpBgRequestComplete',
+            'HttpBgRequestFailed'
+        ]);
+        $this->assertTrue($this->processHasExited($request));
+    }
+
+    public function testFailedRequestEventWithHttpCodeGreaterThan299()
+    {
+        $request = HttpBg::get('https://httpbin.org/status/300');
 
         $this->assertFiredEvents($request, [
             'HttpBgRequestSending',

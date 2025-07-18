@@ -22,6 +22,17 @@ class HttpBgTest extends TestCase
         $this->assertTrue($this->processHasExited($request));
     }
 
+    public function testGetWithParameters()
+    {
+        $request = HttpBg::get('https://httpbin.org/get?with=someparams');
+        $this->assertTrue($request->processIsRunning());
+        $this->assertTrue($this->processHasExited($request));
+
+        $request = Http::background()->get('https://httpbin.org/get?with=someparams');
+        $this->assertTrue($request->processIsRunning());
+        $this->assertTrue($this->processHasExited($request));
+    }
+
     public function testHead()
     {
         $request = HttpBg::head('https://httpbin.org/head');

@@ -5,9 +5,9 @@
 [![PHPStan](https://github.com/oliverlundquist/laravel-http-background/actions/workflows/phpstan.yml/badge.svg?branch=master)](https://github.com/oliverlundquist/laravel-http-background/actions/workflows/phpstan.yml)
 [![PHP-CS-Fixer](https://github.com/oliverlundquist/laravel-http-background/actions/workflows/php-cs-fixer.yml/badge.svg?branch=master)](https://github.com/oliverlundquist/laravel-http-background/actions/workflows/php-cs-fixer.yml)
 
-Moves HTTP Requests out from PHP to a forked process on the server executing the request through cURL and then piping the results back into an Laravel Artisan command that fires events about the status of the response of the request. This enables PHP to execute without waiting for responses for its HTTP requests, enabling one server instance to handle lots of outgoing HTTP requests without using much resources or blocking the execution of PHP.
+Moves HTTP Requests out from PHP to a forked process on the server executing the request through cURL and then piping the results back into a Laravel Artisan command that fires events about the status of the response of the request. This enables PHP to execute without having to wait for responses from its HTTP requests, enabling one server instance to handle lots of outgoing HTTP requests without using many resources or blocking the execution of PHP. In my tests, 10 concurrent requests had a peak memory usage of only 40mb.
 
-I wrote a blog about this package where I go into more detail about the motivation behind it and alternative methods that I tried before deciding to make it. It's available [<a href="https://oliverlundquist.com/2025/07/17/performing-http-requests-in-background.html" target="_blank">here</a>].
+I wrote a blog about this package where I go into more detail about the motivation behind it and alternative methods that I tried before going down the route of forking HTTP requests into separate processes. It's available [<a href="https://oliverlundquist.com/2025/07/20/performing-http-requests-in-background.html" target="_blank">here</a>].
 
 ### Usage
 
@@ -46,14 +46,14 @@ Http::background()->timeout(30);
 ```
 
 #### ->retry()
-Max attempts this request can be retried, see implementation example below.
+Max attempts that this request can be retried, see the implementation example below.
 ```php
 HttpBg::retry(3);
 Http::background()->retry(3);
 ```
 
 #### ->setRequestTag()
-Arbitrary data used to identify request.
+Arbitrary data used to identify the request.
 ```php
 HttpBg::setRequestTag('webhook callback for id: 31');
 Http::background()->setRequestTag('webhook callback for id: 31');
@@ -74,7 +74,7 @@ Http::background()->accept('application/json');
 ```
 
 #### ->withBody()
-Set the body of the request, this can also be set implicitly by calling any of the HTTP verb short-hand methods `->post()`, `->patch()`, `->put()`, `->delete()`. The withBody() method can also set the Content-Type and Accept headers by providing values for the second and third argument.
+Set the body of the request, this can also be set implicitly by calling any of the HTTP verb short-hand methods `->post()`, `->patch()`, `->put()`, `->delete()`. The withBody() method can also set the Content-Type and Accept headers by providing values for the second and third arguments.
 ```php
 $contentType = 'application/json';
 $accept      = 'application/json';
@@ -83,7 +83,7 @@ Http::background()->withBody(json_encode(['json' => 'payload']), $contentType, $
 ```
 
 #### ->queue()
-Push the request to the Laravel Queue and fork a process on your queue worker server instance instead of your main PHP application server. This is useful if you don't want forked processes on your application server but rather have them being processed on your server instance running the queue worker.
+Push the request to the Laravel Queue and fork a process on your queue worker server instance instead of your main PHP application server. This is useful if you don't want forked processes on your application server but rather have them processed on your server instance running the queue worker.
 ```php
 HttpBg::queue()->get('https://httpbin.org/get');
 Http::background()->queue()->get('https://httpbin.org/get');
@@ -113,7 +113,7 @@ Event::listen(function (HttpBgRequestComplete $event) { Log::info($event->reques
 
 ### Implementation Example
 
-This is an example of a basic implementation that handles request retries and send notifications of failed and timed out requests by mail.
+This is an example of a basic implementation that handles request retries and sends notifications of failed and timed-out requests by mail.
 
 ```php
 class AppServiceProvider extends ServiceProvider

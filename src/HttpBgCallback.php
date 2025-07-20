@@ -49,13 +49,19 @@ class HttpBgCallback extends Command
     {
         $curlResponseCode = intval($this->argument('curl_response_code'));
 
-        if ($curlErrorCode === 0) {
-            return true;
+        if ($curlErrorCode !== 0) {
+            return false;
         }
-        if ($curlResponseCode === 200) {
-            return true;
+        if ($curlResponseCode === 0) {
+            return false;
         }
-        return false;
+        if ($curlResponseCode < 200) {
+            return false;
+        }
+        if ($curlResponseCode > 299) {
+            return false;
+        }
+        return true;
     }
 
     protected function requestTimedOut(int $curlErrorCode): bool

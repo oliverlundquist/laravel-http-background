@@ -1,4 +1,4 @@
-## Laravel HTTP Background
+# Laravel HTTP Background
 
 [![PHPUnit](https://github.com/oliverlundquist/laravel-http-background/actions/workflows/phpunit.yml/badge.svg?branch=master)](https://github.com/oliverlundquist/laravel-http-background/actions/workflows/phpunit.yml)
 [![Coverage](https://raw.githubusercontent.com/oliverlundquist/laravel-http-background/refs/heads/image-data/coverage.svg)](https://github.com/oliverlundquist/laravel-http-background/actions/workflows/coverage.yml)
@@ -9,7 +9,13 @@ Moves HTTP Requests out from PHP to a forked process on the server executing the
 
 I wrote a blog about this package where I go into more detail about the motivation behind it and alternative methods that I tried before going down the route of forking HTTP requests into separate processes. It's available [<a href="https://oliverlundquist.com/2025/07/20/performing-http-requests-in-background.html" target="_blank">here</a>].
 
-### Usage
+## Installation
+
+```
+composer require oliverlundquist/laravel-http-background
+```
+
+## Usage
 
 ```php
 // use it directly
@@ -29,7 +35,7 @@ Http::background()->put('https://httpbin.org/put', json_encode(['json' => 'paylo
 Http::background()->delete('https://httpbin.org/delete');
 ```
 
-### Options
+## Options
 
 #### ->connectionTimeout()
 Timeout to establish a connection (in seconds).
@@ -98,7 +104,7 @@ $request = Http::background()->get('https://httpbin.org/get');
 $request->processIsRunning();
 ```
 
-### Events
+## Events
 
 Events are fired to track the progress and result of the request.
 
@@ -111,7 +117,7 @@ Event::listen(function (HttpBgRequestTimeout $event)  { Log::info($event->reques
 Event::listen(function (HttpBgRequestComplete $event) { Log::info($event->requestId); });
 ```
 
-### Implementation Example
+## Implementation Example
 
 This is an example of a basic implementation that handles request retries and sends notifications of failed and timed-out requests by mail.
 
@@ -144,7 +150,7 @@ class AppServiceProvider extends ServiceProvider
 }
 ```
 
-### Windows Users
+## Windows Users
 
 PowerShell is currently not supported. However, adding support shouldn't be too difficult, since the cURL arguments are mostly the same - just replace -o /dev/null with -o NUL.
 

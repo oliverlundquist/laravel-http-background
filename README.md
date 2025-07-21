@@ -9,6 +9,12 @@ Moves HTTP Requests out from PHP to a forked process on the server executing the
 
 I wrote a blog about this package where I go into more detail about the motivation behind it and alternative methods that I tried before going down the route of forking HTTP requests into separate processes. It's available [<a href="https://oliverlundquist.com/2025/07/20/performing-http-requests-in-background.html" target="_blank">here</a>].
 
+### Installation
+
+```
+composer require oliverlundquist/laravel-http-background
+```
+
 ### Usage
 
 ```php
